@@ -1,7 +1,15 @@
 {
-  "name": "taskflow",
+  "name": "next-auth-kit",
   "version": "0.1.0",
   "private": true,
+  "description": "A Next.js authentication kit with NextAuth.js, MongoDB, and Tailwind CSS",
+  "keywords": [
+    "nextjs",
+    "next-auth",
+    "mongodb",
+    "tailwindcss",
+    "authentication"
+  ],
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",

@@ -2,7 +2,10 @@ import { connectDB } from "@/lib/db";
 import User from "@/models/userModel";
 import { NextResponse, NextRequest } from "next/server";
 import bcrypt from "bcryptjs";
-import { sendEmail } from "@/helpers/mailer";
+import { Resend } from "resend";
+import EmailTemplate from "../../../../../email/template";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   try {
@@ -38,15 +41,31 @@ export async function POST(req: NextRequest) {
 
     await newUser.save();
 
-    // Send verification email
 
-    await sendEmail(
-      "VERIFY",
-      "Verify your email",
-      email,
-      (newUser._id as any)?.toString()
+    const verificationToken = await bcrypt.hash(
+      (newUser._id as string | number | { toString(): string }).toString(),
+      10
     );
-
+    newUser.verificationToken = verificationToken;
+    newUser.verificationTokenExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+    await newUser.save();
+    const verificationEmail = await resend.emails.send({
+      from: "Acme <no-reply@talhabilal.dev>",
+      to: email,
+      subject: "Please verify your email",
+      react: EmailTemplate({
+        emailType: "VERIFY",
+        Subject: "Verify your email",
+        token: verificationToken,
+      }),
+    });
+    if (verificationEmail.error) {
+      console.error(
+        "Error sending verification email:",
+        verificationEmail.error
+      );
+      throw new Error("Failed to send verification email.");
+    }
     return NextResponse.json(
       { message: "User registered successfully." },
       { status: 201 }

@@ -1,4 +1,4 @@
-import { Schema, model, Document, Model } from "mongoose";
+import { Schema, model, Document, Model , models } from "mongoose";
 
 export interface IUser extends Document {
   username: string;
@@ -74,6 +74,8 @@ userSchema.methods.comparePassword = async function (
   return candidatePassword === this.password;
 };
 
-const User: Model<IUser> = model<IUser>("User", userSchema);
+const User: Model<IUser> = models.User
+  ? (models.User as Model<IUser>)
+  : model<IUser>("User", userSchema);
 
 export default User;
