@@ -1,6 +1,10 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import bcrypt from "bcryptjs";
 import User from "@/models/userModel";
+import EmailTemplate from "../../email/template";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 export const sendEmail = async (
   EmailType: string,
   subject: string,
@@ -13,6 +17,7 @@ export const sendEmail = async (
 
   try {
     const hashedUserId = await bcrypt.hash(userId, 10);
+
     if (EmailType === "VERIFY") {
       const user = await User.findById(userId);
       if (!user) {
@@ -31,24 +36,16 @@ export const sendEmail = async (
       await user.save();
     }
 
-    const transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    const mailOptions = {
-      from: `${process.env.APP_NAME || "No Reply"} <${process.env.EMAIL_FROM}>`,
+    const { data, error } = await resend.emails.send({
+      from: "Acme <onboarding@resend.dev>",
       to: Email,
       subject: `${EmailType} - ${subject}`,
-      html: `<p>Click <a href="http://localhost:3000/verify/${userId}">here</a> to verify your email.</p>`,
-    };
-
-    await transporter.sendMail(mailOptions);
+      react: EmailTemplate({
+        emailType: EmailType,
+        Subject: subject,
+        token: hashedUserId,
+      }),
+    });
   } catch (error: any) {
     throw new Error("Failed to send email" + error.message);
   }
