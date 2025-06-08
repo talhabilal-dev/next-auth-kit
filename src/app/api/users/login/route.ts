@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
     };
 
     const tokenData: TokenData = {
-      userId: user._id as string,
+      userId: user._id.toString(),
       username: user.username as string,
       email: user.email as string,
     };
@@ -64,6 +64,7 @@ export async function POST(req: NextRequest) {
 
     const response = NextResponse.json({
       message: "User logged in successfully.",
+      success: true,
       user: userData,
       token,
     });

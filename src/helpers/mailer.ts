@@ -40,7 +40,7 @@ export const sendEmail = async (
     }
 
     const { data, error } = await resend.emails.send({
-      from: "Acme <no-reply@talhabilal.dev>",
+      from: `Acme <no-reply@${process.env.FROM_EMAIL_DOMAIN}>`,
       to: Email,
       subject: `${EmailType} - ${subject}`,
       react: EmailTemplate({
@@ -57,6 +57,6 @@ export const sendEmail = async (
     return data;
   } catch (error: any) {
     console.log(error);
-    throw new Error("Failed to send email" + error.message);
+    return null;
   }
 };
