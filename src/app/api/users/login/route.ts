@@ -2,7 +2,7 @@ import { connectDB } from "@/lib/db";
 import User from "@/models/userModel";
 import bcrypt from "bcryptjs";
 import { NextResponse, NextRequest } from "next/server";
-import jwt from "jsonwebtoken";
+import { SignJWT } from "jose";
 
 interface TokenData {
   userId: string;
@@ -58,9 +58,11 @@ export async function POST(req: NextRequest) {
       email: user.email as string,
     };
 
-    const token = jwt.sign(tokenData, process.env.TOKEN_SECRET as string, {
-      expiresIn: "1d", // Token expiration time
-    });
+    const token = await new SignJWT({ ...tokenData })
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuedAt()
+      .setExpirationTime("1d") // Token valid for 1 day
+      .sign(new TextEncoder().encode(process.env.TOKEN_SECRET));
 
     const response = NextResponse.json({
       message: "User logged in successfully.",

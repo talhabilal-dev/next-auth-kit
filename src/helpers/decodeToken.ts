@@ -1,8 +1,7 @@
 import { NextRequest } from "next/server";
+import { jwtVerify } from "jose";
 
-import jwt from "jsonwebtoken";
-
-export function decodeToken(req: NextRequest) {
+export async function decodeToken(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
 
   if (!token) {
@@ -10,8 +9,10 @@ export function decodeToken(req: NextRequest) {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.TOKEN_SECRET as string);
-    return (decoded as jwt.JwtPayload).userId;
+    const secret = new TextEncoder().encode(process.env.TOKEN_SECRET);
+    const { payload: decoded } = await jwtVerify(token, secret);
+
+    return decoded.userId;
   } catch (error: any) {
     console.error("Token verification error:", error.message);
     throw new Error("Invalid token");
