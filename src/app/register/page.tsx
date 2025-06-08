@@ -14,6 +14,7 @@ interface FormErrors {
   email?: string;
   password?: string;
   confirmPassword?: string;
+  general?: string;
 }
 
 export default function Register() {
@@ -97,8 +98,6 @@ export default function Register() {
       setIsSubmitting(true);
 
       try {
-        // Simulate form submission
-        // In a real application, you would send the formData to your backend API
         const response = await fetch("/api/users/register", {
           method: "POST",
           headers: {
@@ -107,23 +106,36 @@ export default function Register() {
           body: JSON.stringify(formData),
         });
 
+        const data = await response.json();
+
         if (!response.ok) {
-          throw new Error("Failed to create account");
+          // Handle known error from API
+          const errorMessage = data?.error || "Failed to create account.";
+          setErrors({ general: errorMessage });
+          toast.error(errorMessage);
+          return;
         }
+
+        // Success
+        toast.success("Account created successfully!");
         console.log("Form submitted:", formData);
 
-        toast.success("Account created successfully!");
-
-        // Reset form
         setFormData({
           username: "",
           email: "",
           password: "",
           confirmPassword: "",
         });
-      } catch (error) {
+      } catch (error: unknown) {
         console.error("Signup error:", error);
-        toast.error("Failed to create account. Please try again.");
+
+        let errorMessage = "An unexpected error occurred. Please try again.";
+        if (error instanceof Error) {
+          errorMessage = error.message;
+        }
+
+        setErrors({ general: errorMessage });
+        toast.error(errorMessage);
       } finally {
         setIsSubmitting(false);
       }
@@ -138,7 +150,7 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -335,7 +347,7 @@ export default function Register() {
             <p className="text-sm text-gray-600">
               Already have an account?{" "}
               <a
-                href="#"
+                href="/login"
                 className="font-medium text-indigo-600 hover:text-indigo-500"
               >
                 Sign in

@@ -1,12 +1,15 @@
-import Image from "next/image";
+import React from "react";
 
-export default function Home() {
+import Sidebar from "@/components/dashboardSideBar";
+import Dashboard from "@/components/dashboard";
+
+const Home: React.FC = () => {
   return (
-
-    <div>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
+    <div className="flex h-screen bg-gray-50">
+      <Sidebar activeItem="Dashboard" />
+      <Dashboard />
     </div>
   );
-}
+};
+
+export default Home;

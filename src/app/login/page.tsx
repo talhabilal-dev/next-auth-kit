@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface FormData {
   email: string;
@@ -14,6 +15,7 @@ interface FormErrors {
 }
 
 export default function Login() {
+  const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -82,7 +84,6 @@ export default function Login() {
       setIsSubmitting(true);
 
       try {
-        // Simulate API call
         const response = await fetch("/api/users/login", {
           method: "POST",
           headers: {
@@ -95,33 +96,40 @@ export default function Login() {
           }),
         });
 
+        const data = await response.json();
+
         if (!response.ok) {
-          throw new Error("Failed to login");
+          const errorMessage = data?.error || "Login failed. Please try again.";
+          setErrors({ general: errorMessage });
+          toast.error(errorMessage);
+          return;
         }
 
-        const data = await response.json();
         if (data.success) {
-          // Simulate successful authentication
           toast.success("Login successful!");
-          // Reset form
+          router.push("/");
+
           setFormData({
             email: "",
             password: "",
           });
           setRememberMe(false);
         } else {
-          // Simulate authentication failure
-          setErrors({
-            general: "Invalid email or password. Please try again.",
-          });
+          // Backend returned 200 but login failed logically
+          const message = data?.message || "Invalid email or password.";
+          setErrors({ general: message });
+          toast.error(message);
         }
-      } catch (error) {
+      } catch (error: unknown) {
         console.error("Signin error:", error);
-        toast.error("An error occurred. Please try again later.");
-        // Set general error message
-        setErrors({
-          general: "An error occurred. Please try again later.",
-        });
+
+        let message = "An unexpected error occurred. Please try again later.";
+        if (error instanceof Error) {
+          message = error.message;
+        }
+
+        setErrors({ general: message });
+        toast.error(message);
       } finally {
         setIsSubmitting(false);
       }
@@ -146,7 +154,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -386,7 +394,7 @@ export default function Login() {
             <p className="text-sm text-gray-600">
               Don't have an account?{" "}
               <a
-                href="#"
+                href="/register"
                 className="font-medium text-indigo-600 hover:text-indigo-500"
               >
                 Sign up
