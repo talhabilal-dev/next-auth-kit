@@ -67,13 +67,6 @@ const userSchema = new Schema<IUser>({
   },
 });
 
-userSchema.methods.comparePassword = async function (
-  candidatePassword: string
-): Promise<boolean> {
-  // Replace with real hash comparison in production
-  return candidatePassword === this.password;
-};
-
 const User: Model<IUser> = models.User
   ? (models.User as Model<IUser>)
   : model<IUser>("User", userSchema);
