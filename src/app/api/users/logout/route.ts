@@ -1,10 +1,7 @@
-import { connectDB } from "@/lib/db";
-import User from "@/models/userModel";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    await connectDB();
 
     const response = NextResponse.json({
       message: "User logged out successfully.",

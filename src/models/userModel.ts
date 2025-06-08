@@ -11,7 +11,6 @@ export interface IUser extends Document {
   forgetTokenExpiry?: Date;
   verificationToken?: string;
   verificationTokenExpiry?: Date;
-  comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
 const userSchema = new Schema<IUser>({

@@ -2,8 +2,7 @@ import { Resend } from "resend";
 import bcrypt from "bcryptjs";
 import User from "@/models/userModel";
 import EmailTemplate from "../../email/template";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { connectDB } from "@/lib/db";
 
 export const sendEmail = async (
   EmailType: string,
@@ -16,6 +15,10 @@ export const sendEmail = async (
   }
 
   try {
+    await connectDB();
+
+    const resend = new Resend(process.env.RESEND_API_KEY as string);
+
     const hashedUserId = await bcrypt.hash(userId, 10);
 
     if (EmailType === "VERIFY") {

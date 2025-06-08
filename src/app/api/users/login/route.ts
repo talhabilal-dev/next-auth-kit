@@ -4,6 +4,12 @@ import bcrypt from "bcryptjs";
 import { NextResponse, NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 
+interface TokenData {
+  userId: string;
+  username: string;
+  email: string;
+}
+
 export async function POST(req: NextRequest) {
   try {
     await connectDB();
@@ -18,7 +24,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Find user by email
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select("+password +isVerified");
     if (!user) {
       return NextResponse.json({ error: "User not found." }, { status: 404 });
     }
@@ -46,13 +52,13 @@ export async function POST(req: NextRequest) {
       createdAt: user.createdAt,
     };
 
-    const tokenData = {
-      userId: user._id,
-      username: user.username,
-      email: user.email,
+    const tokenData: TokenData = {
+      userId: user._id as string,
+      username: user.username as string,
+      email: user.email as string,
     };
 
-    const token = jwt.sign(tokenData, process.env.JWT_SECRET as string, {
+    const token = jwt.sign(tokenData, process.env.TOKEN_SECRET as string, {
       expiresIn: "1d", // Token expiration time
     });
 
