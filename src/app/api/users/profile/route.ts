@@ -5,6 +5,12 @@ import { decodeToken } from "@/helpers/decodeToken";
 
 export async function GET(req: NextRequest) {
   const userId = await decodeToken(req);
+  if (!userId) {
+    return NextResponse.json(
+      { error: "Unauthorized. Please log in." },
+      { status: 401 }
+    );
+  }
 
   try {
     await connectDB();

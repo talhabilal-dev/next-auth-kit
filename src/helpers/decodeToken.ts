@@ -5,7 +5,7 @@ export async function decodeToken(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
 
   if (!token) {
-    throw new Error("No token provided");
+    return null; // No token found
   }
 
   try {
@@ -15,6 +15,6 @@ export async function decodeToken(req: NextRequest) {
     return decoded.userId;
   } catch (error: any) {
     console.error("Token verification error:", error.message);
-    throw new Error("Invalid token");
+    return null;
   }
 }

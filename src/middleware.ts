@@ -1,21 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { jwtVerify } from "jose";
-
+import { decodeToken } from "./helpers/decodeToken";
 const PUBLIC_PATHS = ["/login", "/register", "/public"];
-
-const verifyToken = async (token: string) => {
-  const secret = new TextEncoder().encode(process.env.TOKEN_SECRET!);
-
-  try {
-    const { payload } = await jwtVerify(token, secret, {
-      algorithms: ["HS256"],
-    });
-    return payload;
-  } catch (err) {
-    console.error("JWT verification failed:", err);
-    return null;
-  }
-};
 
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
@@ -31,8 +16,9 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  // Token exists — verify
-  const payload = await verifyToken(token);
+  // Verify the token
+  const payload = await decodeToken(req);
+  // If token is invalid or expired, redirect to login
 
   if (!payload) {
     return NextResponse.redirect(new URL("/login", req.url));
@@ -47,5 +33,5 @@ export default async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|static|favicon.ico).*)", "/", "/*"],
+  matcher: ["/((?!_next|api|static|favicon.ico).*)", "/"],
 };
