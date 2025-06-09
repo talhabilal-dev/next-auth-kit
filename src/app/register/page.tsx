@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { toast } from "sonner";
+import Link from "next/link";
 
 interface FormData {
   username: string;
@@ -150,24 +151,33 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
+            <div className="absolute inset-0 opacity-40">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10"></div>
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
+                             radial-gradient(circle at 75% 75%, rgba(236, 72, 153, 0.1) 0%, transparent 50%)`,
+          }}
+        ></div>
+      </div>
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-2 text-center text-3xl font-extrabold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
             Create your account
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-center text-sm text-gray-400">
             Join us today and get started
           </p>
         </div>
 
-        <div className="mt-8 space-y-6 bg-white p-8 rounded-lg shadow-lg">
-          <div className="space-y-4">
-            {/* Username Field */}
+        <div className="mt-2 space-y-6 bg-slate-800/50 backdrop-blur-xl p-6 rounded-2xl shadow-2xl border border-purple-500/20">
+
             <div>
               <label
                 htmlFor="username"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-300 mb-1"
               >
                 Username
               </label>
@@ -178,8 +188,8 @@ export default function Register() {
                 value={formData.username}
                 onChange={handleChange}
                 onKeyPress={handleKeyPress}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ${
-                  errors.username ? "border-red-500" : "border-gray-300"
+                className={`w-full px-4 py-2 bg-slate-700/50 border rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 text-white ${
+                  errors.email ? "border-red-500" : "border-slate-600"
                 }`}
                 placeholder="Enter your username"
                 aria-describedby={
@@ -201,7 +211,7 @@ export default function Register() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-300 mb-1"
               >
                 Email Address
               </label>
@@ -212,8 +222,8 @@ export default function Register() {
                 value={formData.email}
                 onChange={handleChange}
                 onKeyPress={handleKeyPress}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ${
-                  errors.email ? "border-red-500" : "border-gray-300"
+                className={`w-full px-4 py-2 bg-slate-700/50 border rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 text-white ${
+                  errors.email ? "border-red-500" : "border-slate-600"
                 }`}
                 placeholder="Enter your email"
                 aria-describedby={errors.email ? "email-error" : undefined}
@@ -233,7 +243,7 @@ export default function Register() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-300 mb-1"
               >
                 Password
               </label>
@@ -244,8 +254,8 @@ export default function Register() {
                 value={formData.password}
                 onChange={handleChange}
                 onKeyPress={handleKeyPress}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ${
-                  errors.password ? "border-red-500" : "border-gray-300"
+                className={`w-full px-4 py-2 bg-slate-700/50 border rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 text-white ${
+                  errors.email ? "border-red-500" : "border-slate-600"
                 }`}
                 placeholder="Enter your password"
                 aria-describedby={
@@ -267,7 +277,7 @@ export default function Register() {
             <div>
               <label
                 htmlFor="confirmPassword"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-300 mb-1"
               >
                 Confirm Password
               </label>
@@ -278,8 +288,8 @@ export default function Register() {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 onKeyPress={handleKeyPress}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ${
-                  errors.confirmPassword ? "border-red-500" : "border-gray-300"
+                className={`w-full px-4 py-2 bg-slate-700/50 border rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 text-white ${
+                  errors.email ? "border-red-500" : "border-slate-600"
                 }`}
                 placeholder="Confirm your password"
                 aria-describedby={
@@ -295,46 +305,23 @@ export default function Register() {
                   {errors.confirmPassword}
                 </p>
               )}
-            </div>
+    
           </div>
 
           <div>
             <button
               type="button"
-              onClick={() => handleSubmit()}
+              onClick={() => handleSubmit}
               disabled={isSubmitting}
-              className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
+              className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200 ${
                 isSubmitting
-                  ? "bg-indigo-400 cursor-not-allowed"
-                  : "bg-indigo-600 hover:bg-indigo-700"
+                  ? "bg-purple-500/50 cursor-not-allowed"
+                  : "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 shadow-lg hover:shadow-purple-500/25 transform hover:scale-105"
               }`}
-              aria-label={
-                isSubmitting ? "Creating account..." : "Create account"
-              }
             >
               {isSubmitting ? (
                 <>
-                  <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
+                  <div className="animate-spin -ml-1 mr-3 h-5 w-5 border-2 border-white/30 border-t-white rounded-full"></div>
                   Creating Account...
                 </>
               ) : (
@@ -344,14 +331,14 @@ export default function Register() {
           </div>
 
           <div className="text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-400">
               Already have an account?{" "}
-              <a
+              <Link
                 href="/login"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
+                className="font-medium text-purple-400 hover:text-purple-300 transition-colors"
               >
-                Sign in
-              </a>
+                Sign In
+              </Link>
             </p>
           </div>
         </div>
