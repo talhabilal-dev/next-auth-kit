@@ -2,17 +2,14 @@
 import React, { useState } from "react";
 import {
   User,
-  Bell,
   Shield,
   Palette,
-  Globe,
-  CreditCard,
-  Download,
-  Trash2,
   Save,
   Eye,
   EyeOff,
 } from "lucide-react";
+
+import { toast } from "sonner";
 
 interface SettingsFormData {
   // Profile Settings
@@ -75,9 +72,66 @@ const Settings: React.FC = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const handleChangePassword = async () => {
+    const { currentPassword, newPassword, confirmPassword } = formData;
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      toast.error("All password fields are required.");
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      toast.error("New password must be at least 8 characters long.");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      toast.error("New password and confirm password do not match.");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/users/change-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data?.error || "Failed to change password.");
+      }
+
+      toast.success("Password updated successfully!");
+
+      // Clear password fields
+      setFormData((prev) => ({
+        ...prev,
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      }));
+    } catch (error: any) {
+      console.error("Password change error:", error);
+      toast.error(error.message || "Something went wrong. Please try again.");
+    }
+  };
+
   const handleSave = () => {
     console.log("Saving settings:", formData);
-    // Add your save logic here
+
+    // Save profile updates (add API call here if needed)
+
+    if (
+      formData.currentPassword ||
+      formData.newPassword ||
+      formData.confirmPassword
+    ) {
+      handleChangePassword();
+    }
   };
 
   const renderProfileSettings = () => (
@@ -263,7 +317,6 @@ const Settings: React.FC = () => {
         return renderSecuritySettings();
       case "appearance":
         return renderAppearanceSettings();
-
       default:
         return renderProfileSettings();
     }
@@ -286,7 +339,7 @@ const Settings: React.FC = () => {
       </header>
 
       {/* Main Content */}
-      <div className="flex h-full">
+      <div className="flex h-auto">
         {/* Sidebar Tabs */}
         <div className="w-64 bg-white border-r border-gray-200 p-4">
           <nav className="space-y-1">

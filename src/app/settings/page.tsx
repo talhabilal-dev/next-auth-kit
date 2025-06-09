@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar from '@/components/dashboardSideBar';
-import Settings from '@/components/ui/setting';
+import Settings from '@/components/setting';
 
 const SettingsPage: React.FC = () => {
   return (
