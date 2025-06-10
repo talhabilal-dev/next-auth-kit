@@ -1,6 +1,14 @@
-import React from 'react';
-import { User, Shield, Zap, Code, ArrowRight, Github, Twitter } from 'lucide-react';
-import Link from 'next/link';
+import React from "react";
+import {
+  User,
+  Shield,
+  Zap,
+  Code,
+  ArrowRight,
+  Github,
+  Twitter,
+} from "lucide-react";
+import Link from "next/link";
 
 export default function WelcomePage() {
   return (
@@ -14,12 +22,18 @@ export default function WelcomePage() {
               NextAuth Kit
             </span>
           </div>
-          
+
           <div className="flex items-center space-x-4">
-            <Link href="/login" className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200 hover:bg-white/10 rounded-lg">
+            <Link
+              href="/login"
+              className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200 hover:bg-white/10 rounded-lg"
+            >
               Sign In
             </Link>
-            <Link href="/register" className="px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium rounded-lg transition-all duration-200 shadow-lg hover:shadow-purple-500/25 transform hover:scale-105">
+            <Link
+              href="/register"
+              className="px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium rounded-lg transition-all duration-200 shadow-lg hover:shadow-purple-500/25 transform hover:scale-105"
+            >
               Sign Up
             </Link>
           </div>
@@ -31,12 +45,15 @@ export default function WelcomePage() {
         {/* Background Effects */}
         <div className="absolute inset-0 opacity-40">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10"></div>
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
-                             radial-gradient(circle at 75% 75%, rgba(236, 72, 153, 0.1) 0%, transparent 50%)`
-          }}></div>
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(circle at 25% 25%, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
+                             radial-gradient(circle at 75% 75%, rgba(236, 72, 153, 0.1) 0%, transparent 50%)`,
+            }}
+          ></div>
         </div>
-        
+
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
           <div className="text-center">
             {/* Main Heading */}
@@ -46,13 +63,13 @@ export default function WelcomePage() {
                 Next-Auth Kit
               </span>
             </h1>
-            
+
             {/* Subtitle */}
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-              The ultimate authentication solution for Next.js applications. 
+              The ultimate authentication solution for Next.js applications.
               Secure, scalable, and developer-friendly.
             </p>
-            
+
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
               <button className="group px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 flex items-center space-x-2">
@@ -75,7 +92,8 @@ export default function WelcomePage() {
             Why Choose Next-Auth Kit?
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Built with modern best practices and designed for developers who value security and simplicity.
+            Built with modern best practices and designed for developers who
+            value security and simplicity.
           </p>
         </div>
 
@@ -86,9 +104,12 @@ export default function WelcomePage() {
               <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 <Shield className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-white">Secure by Default</h3>
+              <h3 className="text-xl font-semibold mb-3 text-white">
+                Secure by Default
+              </h3>
               <p className="text-gray-400 leading-relaxed">
-                Industry-standard security practices with built-in protection against common vulnerabilities and attacks.
+                Industry-standard security practices with built-in protection
+                against common vulnerabilities and attacks.
               </p>
             </div>
           </div>
@@ -99,9 +120,12 @@ export default function WelcomePage() {
               <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 <Zap className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-white">Lightning Fast</h3>
+              <h3 className="text-xl font-semibold mb-3 text-white">
+                Lightning Fast
+              </h3>
               <p className="text-gray-400 leading-relaxed">
-                Optimized for performance with minimal bundle size and instant authentication flows.
+                Optimized for performance with minimal bundle size and instant
+                authentication flows.
               </p>
             </div>
           </div>
@@ -112,9 +136,12 @@ export default function WelcomePage() {
               <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 <Code className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-white">Developer Friendly</h3>
+              <h3 className="text-xl font-semibold mb-3 text-white">
+                Developer Friendly
+              </h3>
               <p className="text-gray-400 leading-relaxed">
-                Simple API, comprehensive documentation, and TypeScript support out of the box.
+                Simple API, comprehensive documentation, and TypeScript support
+                out of the box.
               </p>
             </div>
           </div>
@@ -131,14 +158,20 @@ export default function WelcomePage() {
                 NextAuth Kit
               </span>
             </div>
-            
+
             <div className="flex items-center space-x-6">
-              <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors">
+              <Link
+                href="https://github.com/talhabilal-dev/next-auth-kit"
+                className="text-gray-400 hover:text-purple-400 transition-colors"
+              >
                 <Github className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors">
+              </Link>
+              <Link
+                href="https://x.com/talhabilaldev"
+                className="text-gray-400 hover:text-purple-400 transition-colors"
+              >
                 <Twitter className="h-5 w-5" />
-              </a>
+              </Link>
               <span className="text-gray-500 text-sm">
                 © 2025 NextAuth Kit. All rights reserved.
               </span>

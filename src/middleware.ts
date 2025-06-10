@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decodeToken } from "./helpers/decodeToken";
-const PUBLIC_PATHS = ["/user/login", "/user/register"];
+const PUBLIC_PATHS = ["/user/login", "/user/register","/user/verify-token"];
 
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
@@ -22,6 +22,10 @@ export default async function middleware(req: NextRequest) {
 
   if (!payload) {
     return NextResponse.redirect(new URL("/user/login", req.url));
+  }
+
+  if(payload.isVerified === false) {
+    return NextResponse.redirect(new URL("/user/verify", req.url));
   }
 
   // Optional: redirect logged-in user away from auth pages

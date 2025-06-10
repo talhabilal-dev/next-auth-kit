@@ -12,7 +12,7 @@ export async function decodeToken(req: NextRequest) {
     const secret = new TextEncoder().encode(process.env.TOKEN_SECRET);
     const { payload: decoded } = await jwtVerify(token, secret);
 
-    return decoded.userId;
+    return decoded;
   } catch (error: any) {
     console.error("Token verification error:", error.message);
     return null;

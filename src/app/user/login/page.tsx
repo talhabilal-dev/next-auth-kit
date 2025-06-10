@@ -2,13 +2,6 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import {
-  User,
-  Shield,
-  Zap,
-  Code,
-  ArrowRight,
-  Github,
-  Twitter,
   Eye,
   EyeOff,
   AlertCircle,
@@ -292,12 +285,12 @@ export default function Login() {
             </div>
 
             <div className="text-sm">
-              <a
-                href="#"
+              <Link
+                href="/user/reset-password"
                 className="font-medium text-purple-400 hover:text-purple-300 transition-colors"
               >
                 Forgot your password?
-              </a>
+              </Link>
             </div>
           </div>
           <div>

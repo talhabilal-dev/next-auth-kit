@@ -11,6 +11,8 @@ import {
   Shield,
 } from "lucide-react";
 
+import Link from "next/link";
+
 interface User {
   username: string;
   email: string;
@@ -190,7 +192,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem = "Dashboard" }) => {
                           const isSubActive = subItem.name === activeItem;
                           return (
                             <li key={subItem.name}>
-                              <a
+                              <Link
                                 href={subItem.href}
                                 onClick={closeMobileMenu}
                                 className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 group ${
@@ -203,7 +205,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem = "Dashboard" }) => {
                                   className={`w-4 h-4 ${isSubActive ? "text-purple-300" : "text-gray-500 group-hover:text-gray-300"}`}
                                 />
                                 <span>{subItem.name}</span>
-                              </a>
+                              </Link>
                             </li>
                           );
                         })}
@@ -215,7 +217,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem = "Dashboard" }) => {
 
               return (
                 <li key={item.name}>
-                  <a
+                  <Link
                     href={item.href || "#"}
                     onClick={closeMobileMenu}
                     className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 group ${
@@ -228,7 +230,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem = "Dashboard" }) => {
                       className={`w-5 h-5 ${isActive ? "text-purple-300" : "text-gray-400 group-hover:text-gray-200"}`}
                     />
                     <span>{item.name}</span>
-                  </a>
+                  </Link>
                 </li>
               );
             })}

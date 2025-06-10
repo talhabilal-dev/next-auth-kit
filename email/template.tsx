@@ -1,4 +1,3 @@
-// lib/email/template.tsx
 import React from "react";
 
 export default function EmailTemplate({
@@ -12,8 +11,8 @@ export default function EmailTemplate({
 }) {
   const actionUrl =
     emailType === "VERIFY"
-      ? `${process.env.DOMAIN}/api/users/user-verify?token=${token}`
-      : `${process.env.DOMAIN}/api/users/reset-password?token=${token}`;
+      ? `${process.env.DOMAIN}/user/verify-token?token=${token}&type=email`
+      : `${process.env.DOMAIN}/user/reset-password/verify?token=${token}&type=reset-password`;
 
   return (
     <div>

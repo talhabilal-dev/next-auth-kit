@@ -4,7 +4,10 @@ import { NextResponse, NextRequest } from "next/server";
 import { decodeToken } from "@/helpers/decodeToken";
 
 export async function GET(req: NextRequest) {
-  const userId = await decodeToken(req);
+  const payload: any = await decodeToken(req);
+
+  const userId = payload.userId;
+
   if (!userId) {
     return NextResponse.json(
       { error: "Unauthorized. Please log in." },

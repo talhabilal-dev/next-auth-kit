@@ -8,7 +8,9 @@ export async function POST(req: NextRequest) {
   try {
     await connectDB();
 
-    const userId = await decodeToken(req);
+    const payload: any = await decodeToken(req);
+
+    const userId = payload.userId;
 
     const { currentPassword, newPassword } = await req.json();
 

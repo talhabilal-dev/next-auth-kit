@@ -8,6 +8,7 @@ interface TokenData {
   userId: string;
   username: string;
   email: string;
+  isVerified: boolean;
 }
 
 export async function POST(req: NextRequest) {
@@ -56,6 +57,7 @@ export async function POST(req: NextRequest) {
       userId: user._id.toString(),
       username: user.username as string,
       email: user.email as string,
+      isVerified: user.isVerified as boolean,
     };
 
     const token = await new SignJWT({ ...tokenData })

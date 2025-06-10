@@ -28,11 +28,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (user.isVerified) {
+      return NextResponse.json(
+        { error: "User is already verified." },
+        { status: 400 }
+      );
+    }
     // Verify the user
     user.isVerified = true;
     user.verificationToken = undefined; // Clear the token
     user.verificationTokenExpiry = undefined; // Clear the expiry
-    await user.save();  
+    await user.save();
 
     return NextResponse.json({ message: "User verified successfully." });
   } catch (error: any) {
