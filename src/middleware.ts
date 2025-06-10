@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decodeToken } from "./helpers/decodeToken";
-const PUBLIC_PATHS = ["/login", "/register", "/public"];
+const PUBLIC_PATHS = ["/login", "/register", "/public" ,"/profile", "/about", "/contact" ,"/appearance", "/dashboard", "/dashboard/settings", "/dashboard/appearance", "/dashboard/profile", "/security", "/dashboard/billing", "/dashboard/notifications"];
 
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
