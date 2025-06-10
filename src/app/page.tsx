@@ -24,13 +24,13 @@ export default function WelcomePage() {
 
           <div className="flex items-center space-x-4">
             <Link
-              href="/login"
+              href="/user/login"
               className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200 hover:bg-white/10 rounded-lg"
             >
               Sign In
             </Link>
             <Link
-              href="/register"
+              href="/user/register"
               className="px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium rounded-lg transition-all duration-200 shadow-lg hover:shadow-purple-500/25 transform hover:scale-105"
             >
               Sign Up
