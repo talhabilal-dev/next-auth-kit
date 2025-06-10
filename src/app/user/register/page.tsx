@@ -4,6 +4,8 @@ import { toast } from "sonner";
 import Link from "next/link";
 
 interface FormData {
+  firstname?: string;
+  lastname?: string;
   username: string;
   email: string;
   password: string;
@@ -11,6 +13,8 @@ interface FormData {
 }
 
 interface FormErrors {
+  firstname?: string;
+  lastname?: string;
   username?: string;
   email?: string;
   password?: string;
@@ -20,6 +24,8 @@ interface FormErrors {
 
 export default function Register() {
   const [formData, setFormData] = useState<FormData>({
+    firstname: "",
+    lastname: "",
     username: "",
     email: "",
     password: "",
@@ -32,6 +38,26 @@ export default function Register() {
   const validateForm = (): FormErrors => {
     const newErrors: FormErrors = {};
 
+    // Firstname validation
+    if (!formData.firstname) {
+      newErrors.firstname = "Firstname is required";
+    } else if (formData.firstname.length < 2) {
+      newErrors.firstname = "Firstname must be at least 2 characters";
+    } else if (formData.firstname.length > 30) {
+      newErrors.firstname = "Firstname must be at most 30 characters";
+    } else if (!/^[a-zA-Z]+$/.test(formData.firstname)) {
+      newErrors.firstname = "Firstname can only contain letters";
+    }
+    // Lastname validation
+    if (!formData.lastname) {
+      newErrors.lastname = "Lastname is required";
+    } else if (formData.lastname.length < 2) {
+      newErrors.lastname = "Lastname must be at least 2 characters";
+    } else if (formData.lastname.length > 30) {
+      newErrors.lastname = "Lastname must be at most 30 characters";
+    } else if (!/^[a-zA-Z]+$/.test(formData.lastname)) {
+      newErrors.lastname = "Lastname can only contain letters";
+    }
     // Username validation
     if (!formData.username) {
       newErrors.username = "Username is required";
@@ -69,7 +95,9 @@ export default function Register() {
     return newErrors;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -122,6 +150,8 @@ export default function Register() {
         console.log("Form submitted:", formData);
 
         setFormData({
+          firstname: "",
+          lastname: "",
           username: "",
           email: "",
           password: "",
@@ -152,7 +182,7 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
-            <div className="absolute inset-0 opacity-40">
+      <div className="absolute inset-0 opacity-40">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10"></div>
         <div
           className="absolute inset-0"
@@ -162,7 +192,7 @@ export default function Register() {
           }}
         ></div>
       </div>
-      <div className="max-w-md w-full space-y-8">
+      <div className="lg:max-w-xl w-full space-y-8">
         <div>
           <h2 className="mt-2 text-center text-3xl font-extrabold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
             Create your account
@@ -173,8 +203,78 @@ export default function Register() {
         </div>
 
         <div className="mt-2 space-y-6 bg-slate-800/50 backdrop-blur-xl p-6 rounded-2xl shadow-2xl border border-purple-500/20">
+          {/* First + Last Name */}
+          <div className="flex flex-col lg:flex-row gap-4">
+            <div className="w-full">
+              <label
+                htmlFor="firstname"
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
+                First Name
+              </label>
+              <input
+                id="firstname"
+                name="firstname"
+                type="text"
+                value={formData.firstname}
+                onChange={handleChange}
+                onKeyPress={handleKeyPress}
+                className={`w-full px-4 py-2 bg-slate-700/50 border rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 text-white ${
+                  errors.firstname ? "border-red-500" : "border-slate-600"
+                }`}
+                placeholder="Enter your first name"
+                aria-describedby={
+                  errors.firstname ? "firstname-error" : undefined
+                }
+              />
+              {errors.firstname && (
+                <p
+                  id="firstname-error"
+                  className="mt-1 text-sm text-red-600"
+                  role="alert"
+                >
+                  {errors.firstname}
+                </p>
+              )}
+            </div>
 
-            <div>
+            <div className="w-full">
+              <label
+                htmlFor="lastname"
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
+                Last Name
+              </label>
+              <input
+                id="lastname"
+                name="lastname"
+                type="text"
+                value={formData.lastname}
+                onChange={handleChange}
+                onKeyPress={handleKeyPress}
+                className={`w-full px-4 py-2 bg-slate-700/50 border rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 text-white ${
+                  errors.lastname ? "border-red-500" : "border-slate-600"
+                }`}
+                placeholder="Enter your last name"
+                aria-describedby={
+                  errors.lastname ? "lastname-error" : undefined
+                }
+              />
+              {errors.lastname && (
+                <p
+                  id="lastname-error"
+                  className="mt-1 text-sm text-red-600"
+                  role="alert"
+                >
+                  {errors.lastname}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Username */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="w-full">
               <label
                 htmlFor="username"
                 className="block text-sm font-medium text-gray-300 mb-1"
@@ -189,7 +289,7 @@ export default function Register() {
                 onChange={handleChange}
                 onKeyPress={handleKeyPress}
                 className={`w-full px-4 py-2 bg-slate-700/50 border rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 text-white ${
-                  errors.email ? "border-red-500" : "border-slate-600"
+                  errors.username ? "border-red-500" : "border-slate-600"
                 }`}
                 placeholder="Enter your username"
                 aria-describedby={
@@ -207,7 +307,7 @@ export default function Register() {
               )}
             </div>
 
-            {/* Email Field */}
+            {/* Email */}
             <div>
               <label
                 htmlFor="email"
@@ -238,9 +338,11 @@ export default function Register() {
                 </p>
               )}
             </div>
+          </div>
 
-            {/* Password Field */}
-            <div>
+          {/* Password Field */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="w-full">
               <label
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-300 mb-1"
@@ -305,7 +407,7 @@ export default function Register() {
                   {errors.confirmPassword}
                 </p>
               )}
-    
+            </div>
           </div>
 
           <div>

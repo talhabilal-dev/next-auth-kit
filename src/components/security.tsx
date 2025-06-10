@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-
+import { toast } from "sonner";
 
 const Security = () => {
   const [formData, setFormData] = useState({
@@ -29,8 +29,49 @@ const Security = () => {
     });
   };
 
-  const handleSave = () => {
-    // TODO: Implement save logic
+  const handleSave = async () => {
+    const { currentPassword, newPassword, confirmPassword } = formData;
+
+    // Basic validation
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      toast.error("Please fill in all fields.");
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      toast.error("Password must be at least 8 characters.");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      toast.error("New password and confirmation do not match.");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/users/change-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          currentPassword,
+          newPassword,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data?.message || "Something went wrong.");
+      }
+
+      toast.success("Password updated successfully!");
+      handleReset(); // Reset form after success
+    } catch (err: any) {
+      console.error("Error:", err);
+      toast.error(err.message || "Failed to update password.");
+    }
   };
 
   return (
@@ -38,7 +79,7 @@ const Security = () => {
       <header className="bg-black/20 backdrop-blur-sm border-b border-white/10 px-4 sm:px-6 py-4 sticky top-0 ">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl ml-12 md:ml-2 lg:ml-2 font-bold text-white">
-          Security Settings
+            Security Settings
           </h1>
           <div className="flex gap-3">
             <button
@@ -127,33 +168,6 @@ const Security = () => {
                     placeholder="Confirm new password"
                   />
                 </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-semibold text-white mb-6">
-                Security Options
-              </h3>
-              <div className="flex items-center justify-between p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
-                <div>
-                  <h4 className="text-white font-medium">
-                    Two-Factor Authentication
-                  </h4>
-                  <p className="text-gray-400 text-sm">
-                    Add an extra layer of security
-                  </p>
-                </div>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={formData.twoFactorAuth}
-                    onChange={(e) =>
-                      handleInputChange("twoFactorAuth", e.target.checked)
-                    }
-                    className="sr-only peer"
-                  />
-                  <div className="w-11 h-6 bg-gray-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-800/50 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-pink-500 peer-checked:to-purple-600"></div>
-                </label>
               </div>
             </div>
           </div>

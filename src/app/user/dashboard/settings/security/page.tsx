@@ -4,7 +4,7 @@ import Sidebar from "@/components/dashboardSideBar";
 const AppearancePage: React.FC = () => {
   return (
     <div className="flex">
-      <Sidebar activeItem="Profile" />
+      <Sidebar activeItem="Security" />
       <Appearance />
     </div>
   );

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decodeToken } from "./helpers/decodeToken";
-const PUBLIC_PATHS = ["/login", "/register", "/public" ,"/profile", "/about", "/contact" ,"/appearance", "/dashboard", "/dashboard/settings", "/dashboard/appearance", "/dashboard/profile", "/security", "/dashboard/billing", "/dashboard/notifications"];
+const PUBLIC_PATHS = ["/user/login", "/user/register"];
 
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
@@ -13,7 +13,7 @@ export default async function middleware(req: NextRequest) {
 
   // No token? Redirect to login
   if (!token) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/user/login", req.url));
   }
 
   // Verify the token
@@ -21,17 +21,17 @@ export default async function middleware(req: NextRequest) {
   // If token is invalid or expired, redirect to login
 
   if (!payload) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/user/login", req.url));
   }
 
   // Optional: redirect logged-in user away from auth pages
-  if (path === "/login" || path === "/register") {
-    return NextResponse.redirect(new URL("/", req.url));
+  if (path === "/user/login" || path === "/user/register") {
+    return NextResponse.redirect(new URL("/user/dashboard", req.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|static|favicon.ico).*)", "/dashboard"],
+  matcher: ["/((?!_next|api|static|favicon.ico).*)", "/user/dashboard" ],
 };

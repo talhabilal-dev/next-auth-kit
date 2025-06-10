@@ -1,6 +1,9 @@
 import mongoose, { Schema, model, Document, Model, models } from "mongoose";
 
 export interface IUser extends Document {
+  firstname: string;
+  lastname: string;
+  bio?: string;
   username: string;
   email: string;
   _id: mongoose.Types.ObjectId;
@@ -15,6 +18,26 @@ export interface IUser extends Document {
 }
 
 const userSchema = new Schema<IUser>({
+  firstname: {
+    type: String,
+    required: [true, "First name is required."],
+    minlength: [2, "First name must be at least 2 characters."],
+    maxlength: [30, "First name must be at most 30 characters."],
+    trim: true,
+  },
+  lastname: {
+    type: String,
+    required: [true, "Last name is required."],
+    minlength: [2, "Last name must be at least 2 characters."],
+    maxlength: [30, "Last name must be at most 30 characters."],
+    trim: true,
+  },
+  bio: {
+    type: String,
+    required: false,
+    maxlength: [160, "Bio must be at most 160 characters."],
+    trim: true,
+  },
   username: {
     type: String,
     required: [true, "Username is required."],

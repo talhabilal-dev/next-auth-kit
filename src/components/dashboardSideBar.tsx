@@ -2,18 +2,12 @@
 import React, { useEffect, useState } from "react";
 import {
   Home,
-  BarChart3,
-  Folder,
-  ClipboardList,
-  Calendar,
-  MessageSquare,
   Settings,
   Menu,
   X,
   ChevronDown,
   ChevronRight,
   User,
-  Palette,
   Shield,
 } from "lucide-react";
 
@@ -47,26 +41,34 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem = "Dashboard" }) => {
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   const menuItems: MenuItem[] = [
-    { name: "Dashboard", icon: Home, href: "/" },
-    { 
-      name: "Settings", 
+    { name: "Dashboard", icon: Home, href: "/user/dashboard" },
+    {
+      name: "Settings",
       icon: Settings,
       submenu: [
-        { name: "Profile", icon: User, href: "/settings/profile" },
-        { name: "Security", icon: Shield, href: "/settings/security" },
-      ]
+        {
+          name: "Security",
+          icon: Shield,
+          href: "/user/dashboard/settings/security",
+        },
+      ],
     },
   ];
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        // Simulating user data since we can't make real API calls
+        const response = await fetch("/api/users/profile");
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+
         setUser({
-          username: "John Doe",
-          email: "john.doe@example.com",
-          avatar: "",
-          initials: "JD",
+          username: data.user.username,
+          email: data.user.email,
+          initials: data.user.username?.charAt(0).toUpperCase() || "U",
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -90,7 +92,10 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem = "Dashboard" }) => {
 
   const isSettingsActive = (item: MenuItem): boolean => {
     if (item.submenu) {
-      return item.submenu.some(subItem => subItem.name === activeItem) || item.name === activeItem;
+      return (
+        item.submenu.some((subItem) => subItem.name === activeItem) ||
+        item.name === activeItem
+      );
     }
     return item.name === activeItem;
   };
@@ -132,7 +137,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem = "Dashboard" }) => {
             <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-violet-600 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-lg">
               D
             </div>
-            <h1 className="text-xl font-semibold text-white">Dashboard</h1>
+            <h1 className="text-xl font-bold text-white ">Dashboard</h1>
           </div>
         </div>
 
@@ -142,7 +147,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem = "Dashboard" }) => {
             {menuItems.map((item) => {
               const Icon = item.icon;
               const isActive = isSettingsActive(item);
-              
+
               if (item.submenu) {
                 return (
                   <li key={item.name}>
@@ -155,20 +160,30 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem = "Dashboard" }) => {
                       }`}
                     >
                       <div className="flex items-center space-x-3">
-                        <Icon className={`w-5 h-5 ${isActive ? "text-purple-300" : "text-gray-400 group-hover:text-gray-200"}`} />
+                        <Icon
+                          className={`w-5 h-5 ${isActive ? "text-purple-300" : "text-gray-400 group-hover:text-gray-200"}`}
+                        />
                         <span>{item.name}</span>
                       </div>
                       {settingsOpen ? (
-                        <ChevronDown className={`w-4 h-4 ${isActive ? "text-purple-300" : "text-gray-400 group-hover:text-gray-200"}`} />
+                        <ChevronDown
+                          className={`w-4 h-4 ${isActive ? "text-purple-300" : "text-gray-400 group-hover:text-gray-200"}`}
+                        />
                       ) : (
-                        <ChevronRight className={`w-4 h-4 ${isActive ? "text-purple-300" : "text-gray-400 group-hover:text-gray-200"}`} />
+                        <ChevronRight
+                          className={`w-4 h-4 ${isActive ? "text-purple-300" : "text-gray-400 group-hover:text-gray-200"}`}
+                        />
                       )}
                     </button>
-                    
+
                     {/* Submenu */}
-                    <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                      settingsOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
-                    }`}>
+                    <div
+                      className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                        settingsOpen
+                          ? "max-h-40 opacity-100"
+                          : "max-h-0 opacity-0"
+                      }`}
+                    >
                       <ul className="mt-1 ml-4 space-y-1">
                         {item.submenu.map((subItem) => {
                           const SubIcon = subItem.icon;
@@ -184,7 +199,9 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem = "Dashboard" }) => {
                                     : "text-gray-400 hover:bg-gray-700/50 hover:text-white hover:shadow-md"
                                 }`}
                               >
-                                <SubIcon className={`w-4 h-4 ${isSubActive ? "text-purple-300" : "text-gray-500 group-hover:text-gray-300"}`} />
+                                <SubIcon
+                                  className={`w-4 h-4 ${isSubActive ? "text-purple-300" : "text-gray-500 group-hover:text-gray-300"}`}
+                                />
                                 <span>{subItem.name}</span>
                               </a>
                             </li>
@@ -207,7 +224,9 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem = "Dashboard" }) => {
                         : "text-gray-300 hover:bg-gray-700/50 hover:text-white hover:shadow-md"
                     }`}
                   >
-                    <Icon className={`w-5 h-5 ${isActive ? "text-purple-300" : "text-gray-400 group-hover:text-gray-200"}`} />
+                    <Icon
+                      className={`w-5 h-5 ${isActive ? "text-purple-300" : "text-gray-400 group-hover:text-gray-200"}`}
+                    />
                     <span>{item.name}</span>
                   </a>
                 </li>
