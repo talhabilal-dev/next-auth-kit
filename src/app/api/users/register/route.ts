@@ -8,9 +8,9 @@ export async function POST(req: NextRequest) {
   try {
     await connectDB();
 
-    const { username, email, password } = await req.json();
+    const { firstname, lastname, username, email, password } = await req.json();
 
-    if (!username || !email || !password) {
+    if (!firstname || !lastname || !username || !email || !password) {
       return NextResponse.json(
         { error: "All fields are required." },
         { status: 400 }
@@ -31,14 +31,14 @@ export async function POST(req: NextRequest) {
 
     // Create new user
     const newUser = new User({
+      firstname,
+      lastname,
       username,
       email,
       password: hashedPassword,
     });
 
     await newUser.save();
-
-    
 
     // Send verification email
     const emailResponse = await sendEmail(

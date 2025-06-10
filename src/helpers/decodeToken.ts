@@ -5,12 +5,15 @@ export async function decodeToken(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
 
   if (!token) {
-    return null; // No token found
+    return null;
   }
 
   try {
-    const secret = new TextEncoder().encode(process.env.TOKEN_SECRET);
+    const secret = new TextEncoder().encode(process.env.TOKEN_SECRET as string);
     const { payload: decoded } = await jwtVerify(token, secret);
+
+    if (!decoded) {
+      return null;    }
 
     return decoded;
   } catch (error: any) {

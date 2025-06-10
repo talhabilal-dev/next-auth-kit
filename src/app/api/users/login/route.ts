@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
   try {
     await connectDB();
 
-    const { email, password } = await req.json();
+    const { email, password, rememberMe } = await req.json();
 
     if (!email || !password) {
       return NextResponse.json(
@@ -63,14 +63,13 @@ export async function POST(req: NextRequest) {
     const token = await new SignJWT({ ...tokenData })
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()
-      .setExpirationTime("1d") // Token valid for 1 day
+      .setExpirationTime(rememberMe ? "7d" : "1d")
       .sign(new TextEncoder().encode(process.env.TOKEN_SECRET));
 
     const response = NextResponse.json({
       message: "User logged in successfully.",
       success: true,
       user: userData,
-      token,
     });
 
     response.cookies.set("token", token, {

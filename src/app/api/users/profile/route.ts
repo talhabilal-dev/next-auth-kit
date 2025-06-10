@@ -6,7 +6,14 @@ import { decodeToken } from "@/helpers/decodeToken";
 export async function GET(req: NextRequest) {
   const payload: any = await decodeToken(req);
 
-  const userId = payload.userId;
+  if (!payload) {
+    return NextResponse.json(
+      { error: "Unauthorized. Please log in." },
+      { status: 401 }
+    );
+  }
+
+  const userId = payload?.userId;
 
   if (!userId) {
     return NextResponse.json(

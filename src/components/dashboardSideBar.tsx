@@ -9,6 +9,7 @@ import {
   ChevronRight,
   User,
   Shield,
+  LogOut
 } from "lucide-react";
 
 import Link from "next/link";
@@ -56,6 +57,23 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem = "Dashboard" }) => {
       ],
     },
   ];
+
+  const handleLogout = async () => {
+    try {
+      const res = await fetch("/api/users/logout", {
+        method: "POST",
+      });
+
+      if (!res.ok) {
+        throw new Error("Logout failed");
+      }
+
+      // Optional: clear local user state or redirect
+      window.location.href = "/user/login"; // or push with router
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -234,29 +252,41 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem = "Dashboard" }) => {
                 </li>
               );
             })}
+
+            <li>
+              <button
+                onClick={handleLogout}
+                className="flex items-center space-x-4 px-3 py-2 gap-2 rounded-lg text-sm font-medium transition-all cursor-pointer  duration-200 group text-gray-300 hover:bg-red-700/50 hover:text-white hover:shadow-md"
+              >
+                <LogOut className="w-5 h-5 text-purple-300"></LogOut>
+                Logout
+              </button>
+            </li>
           </ul>
         </nav>
 
         {/* User Profile */}
         {user && (
-          <div className="p-4 border-t border-gray-700/50 bg-gray-800/30 backdrop-blur-sm">
-            <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-700/30 transition-colors cursor-pointer">
+          <div className="p-4 border-t border-gray-700/50 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 backdrop-blur-md">
+            <div className="flex items-center gap-3 p-3 rounded-xl bg-gray-800/60 hover:bg-gray-700/40 transition-colorsshadow-inner">
               {user.avatar ? (
                 <img
                   src={user.avatar}
                   alt={user.username}
-                  className="w-10 h-10 rounded-full object-cover border-2 border-purple-500/30"
+                  className="w-11 h-11 rounded-full object-cover border-2 border-purple-500/40 shadow"
                 />
               ) : (
-                <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-violet-600 rounded-full flex items-center justify-center text-white text-sm font-medium shadow-lg">
+                <div className="w-11 h-11 bg-gradient-to-br from-purple-500 to-violet-600 rounded-full flex items-center justify-center text-white text-lg font-semibold shadow">
                   {user.initials}
                 </div>
               )}
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white truncate">
+              <div className="flex flex-col min-w-0">
+                <span className="text-base font-semibold text-white truncate">
                   {user.username}
-                </p>
-                <p className="text-xs text-gray-400 truncate">{user.email}</p>
+                </span>
+                <span className="text-xs text-gray-400 truncate">
+                  {user.email}
+                </span>
               </div>
             </div>
           </div>

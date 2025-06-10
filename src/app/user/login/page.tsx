@@ -1,11 +1,7 @@
 "use client";
 import { useState } from "react";
 import { toast } from "sonner";
-import {
-  Eye,
-  EyeOff,
-  AlertCircle,
-} from "lucide-react";
+import { Eye, EyeOff, AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -175,8 +171,7 @@ export default function Login() {
 
       <div className="relative z-10 max-w-md w-full space-y-6">
         <div>
-          <div className="flex items-center justify-center mb-2">
-          </div>
+          <div className="flex items-center justify-center mb-2"></div>
           <h2 className="mt-2 text-center text-3xl font-extrabold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
             Sign in to your account
           </h2>
@@ -319,7 +314,7 @@ export default function Login() {
             <p className="text-sm text-gray-400">
               Don't have an account?{" "}
               <Link
-                href="/register"
+                href="/user/register"
                 className="font-medium text-purple-400 hover:text-purple-300 transition-colors"
               >
                 Sign up

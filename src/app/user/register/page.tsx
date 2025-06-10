@@ -413,7 +413,7 @@ export default function Register() {
           <div>
             <button
               type="button"
-              onClick={() => handleSubmit}
+              onClick={() => handleSubmit()}
               disabled={isSubmitting}
               className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200 ${
                 isSubmitting
