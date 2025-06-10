@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  User,
   Shield,
   Zap,
   Code,
@@ -140,8 +139,7 @@ export default function WelcomePage() {
                 Developer Friendly
               </h3>
               <p className="text-gray-400 leading-relaxed">
-                Simple API, comprehensive documentation, and TypeScript support
-                out of the box.
+                Simple API, and TypeScript support out of the box.
               </p>
             </div>
           </div>

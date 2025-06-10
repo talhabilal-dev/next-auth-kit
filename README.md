@@ -2,6 +2,8 @@
 
 A comprehensive authentication kit for Next.js projects, built with TypeScript and MongoDB. This kit provides a robust foundation for custom authentication flows, including login, registration, email verification, password reset, and a sample dashboard with a sidebar. All authentication APIs and pages are included, along with middleware for route protection.
 
+
+
 ## Features
 
 - **Custom Authentication**: Easily extendable authentication logic tailored to your needs.

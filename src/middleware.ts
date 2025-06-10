@@ -5,6 +5,7 @@ const PUBLIC_PATHS = [
   "/user/register",
   "/user/verify-token",
   "/user/reset-password/verify",
+  "/"
 ];
 
 export default async function middleware(req: NextRequest) {
