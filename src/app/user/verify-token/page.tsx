@@ -3,10 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-interface VerificationState {
-  status: "loading" | "success" | "error" | "expired";
-  message: string;
-}
+import { VerificationState } from "@/types";
 
 export default function VerifyTokenPage() {
   const router = useRouter();

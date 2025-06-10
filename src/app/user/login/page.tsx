@@ -4,32 +4,22 @@ import { toast } from "sonner";
 import { Eye, EyeOff, AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
-interface FormData {
-  email: string;
-  password: string;
-}
-
-interface FormErrors {
-  email?: string;
-  password?: string;
-  general?: string;
-}
+import { LoginFormData, LoginFormErrors } from "@/types";
 
 export default function Login() {
   const router = useRouter();
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
   });
 
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<LoginFormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [rememberMe, setRememberMe] = useState<boolean>(false);
 
-  const validateForm = (): FormErrors => {
-    const newErrors: FormErrors = {};
+  const validateForm = (): LoginFormErrors => {
+    const newErrors: LoginFormErrors = {};
 
     // Email validation
     if (!formData.email) {
@@ -56,7 +46,7 @@ export default function Login() {
     }));
 
     // Clear specific error when user starts typing
-    if (errors[name as keyof FormErrors]) {
+    if (errors[name as keyof LoginFormErrors]) {
       setErrors((prev) => ({
         ...prev,
         [name]: "",
@@ -113,7 +103,7 @@ export default function Login() {
 
           setFormData({
             email: "",
-            password: "",
+            password: ""
           });
           setRememberMe(false);
         } else {

@@ -3,27 +3,10 @@ import { useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
 
-interface FormData {
-  firstname?: string;
-  lastname?: string;
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-interface FormErrors {
-  firstname?: string;
-  lastname?: string;
-  username?: string;
-  email?: string;
-  password?: string;
-  confirmPassword?: string;
-  general?: string;
-}
+import { RegisterFormData, RegisterFormErrors } from "@/types";
 
 export default function Register() {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<RegisterFormData>({
     firstname: "",
     lastname: "",
     username: "",
@@ -32,11 +15,11 @@ export default function Register() {
     confirmPassword: "",
   });
 
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<RegisterFormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const validateForm = (): FormErrors => {
-    const newErrors: FormErrors = {};
+  const validateForm = (): RegisterFormErrors => {
+    const newErrors: RegisterFormErrors = {};
 
     // Firstname validation
     if (!formData.firstname) {
@@ -105,7 +88,7 @@ export default function Register() {
     }));
 
     // Clear specific error when user starts typing
-    if (errors[name as keyof FormErrors]) {
+    if (errors[name as keyof RegisterFormErrors]) {
       setErrors((prev) => ({
         ...prev,
         [name]: "",

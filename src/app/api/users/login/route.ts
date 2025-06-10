@@ -3,13 +3,7 @@ import User from "@/models/userModel";
 import bcrypt from "bcryptjs";
 import { NextResponse, NextRequest } from "next/server";
 import { SignJWT } from "jose";
-
-interface TokenData {
-  userId: string;
-  username: string;
-  email: string;
-  isVerified: boolean;
-}
+import { TokenData } from "@/types";
 
 export async function POST(req: NextRequest) {
   try {

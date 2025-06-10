@@ -14,36 +14,14 @@ import {
 
 import Link from "next/link";
 
-interface User {
-  username: string;
-  email: string;
-  avatar?: string;
-  initials?: string;
-}
-
-interface SubMenuItem {
-  name: string;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  href: string;
-}
-
-interface MenuItem {
-  name: string;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  href?: string;
-  submenu?: SubMenuItem[];
-}
-
-interface SidebarProps {
-  activeItem?: string;
-}
+import { SidebarUser ,SidebarSubMenuItem , SidebarMenuItem ,SidebarProps } from "@/types";
 
 const Sidebar: React.FC<SidebarProps> = ({ activeItem = "Dashboard" }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<SidebarUser | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
-  const menuItems: MenuItem[] = [
+  const menuItems: SidebarMenuItem[] = [
     { name: "Dashboard", icon: Home, href: "/user/dashboard" },
     {
       name: "Settings",
@@ -110,7 +88,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem = "Dashboard" }) => {
     setSettingsOpen(!settingsOpen);
   };
 
-  const isSettingsActive = (item: MenuItem): boolean => {
+  const isSettingsActive = (item: SidebarMenuItem): boolean => {
     if (item.submenu) {
       return (
         item.submenu.some((subItem) => subItem.name === activeItem) ||

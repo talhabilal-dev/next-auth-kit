@@ -2,10 +2,7 @@
 import React from "react";
 import { Search, Calendar } from "lucide-react";
 
-interface DashboardCardProps {
-  title: string;
-  index: number;
-}
+import { DashboardCardProps } from "@/types";
 
 const DashboardCard: React.FC<DashboardCardProps> = ({ title, index }) => {
   return (

@@ -9,12 +9,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-interface ForgotPasswordState {
-  email: string;
-  isLoading: boolean;
-  isSuccess: boolean;
-  error: string | null;
-}
+import { ForgotPasswordState } from "@/types";
 
 const Page: React.FC = () => {
   const router = useRouter();
