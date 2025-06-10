@@ -49,22 +49,10 @@ NODE_ENV = development
 npm run dev
 ```
 
-## Project Structure
-
-The project is structured as follows:
-
-
-## Usage
-
-- **Authentication APIs**: Located in `/pages/api/auth/`
-- **Auth Pages**: Located in `/pages/auth/`
-- **Dashboard**: `/pages/dashboard/` with a sample sidebar
-- **Middleware**: `/middleware/auth.ts` for route protection
-
 ## Customization
 
 - Update the UI components to match your branding.
-- Extend the user model in `/types/user.ts` as needed.
+- Extend the user model in `/models/userModel.ts` as needed.
 - Modify middleware logic for custom access control.
 
 ## License
