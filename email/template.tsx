@@ -11,8 +11,8 @@ export default function EmailTemplate({
 }) {
   const actionUrl =
     emailType === "VERIFY"
-      ? `${process.env.DOMAIN}/user/verify-token?token=${token}&type=email`
-      : `${process.env.DOMAIN}/user/reset-password/verify?token=${token}&type=reset-password`;
+      ? `${process.env.NEXT_PUBLIC_APP_URL}/user/verify-token?token=${token}&type=email`
+      : `${process.env.NEXT_PUBLIC_APP_URL}/user/reset-password/verify?token=${token}&type=reset-password`;
 
   return (
     <div>
