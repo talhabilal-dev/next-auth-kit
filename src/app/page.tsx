@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Shield,
-  Zap,
-  Code,
-  ArrowRight,
-  Github,
-  Twitter,
-} from "lucide-react";
+import { Shield, Zap, Code, ArrowRight, Github, Twitter } from "lucide-react";
 import Link from "next/link";
 
 export default function WelcomePage() {
@@ -71,14 +64,21 @@ export default function WelcomePage() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-              <button className="group px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 flex items-center space-x-2">
+              <Link
+                href={"/user/login"}
+                className="group px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 flex items-center space-x-2"
+              >
                 <span>Get Started</span>
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button className="px-8 py-4 border-2 border-purple-400/50 text-purple-200 hover:bg-purple-400/10 font-semibold rounded-xl transition-all duration-300 hover:border-purple-400 flex items-center space-x-2">
+              </Link>
+              <Link
+                href={"https://github.com/talhabilal-dev/next-auth-kit"}
+                target="_blank"
+                className="px-8 py-4 border-2 border-purple-400/50 text-purple-200 hover:bg-purple-400/10 font-semibold rounded-xl transition-all duration-300 hover:border-purple-400 flex items-center space-x-2"
+              >
                 <Github className="h-5 w-5" />
                 <span>View on GitHub</span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
