@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Next-Auth Kit",
+  title: "Next-Auth-Kit",
   description:
     "A Next.js starter kit with NextAuth.js for secure authentication",
 };

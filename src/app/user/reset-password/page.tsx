@@ -148,7 +148,7 @@ const Page: React.FC = () => {
   return (
     <div className={`min-h-screen ${gradientBg} flex items-center justify-center p-4 relative`}>
       <div className="absolute inset-0 opacity-40 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-zinc-500/10" />
         <div
           className="absolute inset-0"
           style={{
@@ -157,7 +157,7 @@ const Page: React.FC = () => {
           }}
         />
       </div>
-      <div className="relative max-w-md w-full bg-white/5 border border-white/10 backdrop-blur-md rounded-xl p-8 shadow-xl text-white">
+      <div className="relative max-w-md w-full bg-zinc-900/40 border border-white/10 backdrop-blur-md rounded-xl p-8 shadow-xl text-white">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
             <Mail className="w-8 h-8 text-white" />

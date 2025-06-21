@@ -46,7 +46,7 @@ const Dashboard: React.FC = () => {
     <div className="flex-1 bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900 min-h-screen lg:ml-64 overflow-y-auto">
       <header className="bg-gray-800/30 backdrop-blur-md border-b border-gray-700/50 px-4 sm:px-6 py-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
-          <div className="ml-12 sm:ml-0">
+          <div className="ml-6 sm:ml-12">
             <h1 className="text-xl sm:text-2xl font-bold text-white">
               Dashboard
             </h1>

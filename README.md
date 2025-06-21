@@ -1,87 +1,305 @@
-# Next Auth Kit
+# Next Auth Kit 🔐
 
-A comprehensive authentication kit for Next.js projects, built with TypeScript and MongoDB. This kit provides a robust foundation for custom authentication flows, including login, registration, email verification, password reset, and a sample dashboard with a sidebar. All authentication APIs and pages are included, along with middleware for route protection.
+A complete authentication solution built with Next.js 15, TypeScript, and MongoDB. This project provides a robust, production-ready authentication system with all essential features and a beautiful, responsive dashboard featuring a stunning dark purple gradient theme.
 
-![Alt text](https://res.cloudinary.com/dvdktrhsz/image/upload/v1749547779/Screenshot_from_2025-06-10_14-12-09_umykjs.png)
+## ✨ Features
 
-## Features
+### 🔒 Authentication System
 
-- **Custom Authentication**: Easily extendable authentication logic tailored to your needs.
-- **Login & Registration**: Ready-to-use pages and APIs for user login and registration.
-- **Email Verification**: Secure email verification flow with token-based validation.
-- **Password Reset**: Complete password reset functionality with email notifications.
-- **Sample Dashboard**: Includes a sample dashboard page with a responsive sidebar.
-- **Middleware Protection**: Middleware to protect routes and ensure authenticated access.
-- **MongoDB Integration**: Uses MongoDB for user data storage and session management.
-- **TypeScript Support**: Fully typed for safety and developer experience.
+- **User Registration** - Complete signup flow with email verification
+- **User Login** - Secure signin with JWT tokens
+- **Email Verification** - Account activation via email
+- **Password Reset** - Forgot password with email recovery
+- **Change Password** - Secure password update for authenticated users
+- **Logout** - Secure session termination
+- **Remember Me** - Persistent login for users
 
-## Login Page
+### 🎨 User Interface
 
-![login](https://res.cloudinary.com/dvdktrhsz/image/upload/v1749547776/Screenshot_from_2025-06-10_13-54-32_s7ta2g.png)
+- **Responsive Dashboard** - Beautiful sidebar layout that works on all devices
+- **Modern UI Components** - Clean, accessible design with Lucide React icons
+- **Dark Purple Gradient Theme** - Stunning dark theme with purple gradients
+- **Toast Notifications** - User feedback with Sonner
+- **Mobile-First Design** - Fully responsive across all screen sizes
 
-## Registration Page
+### 🛠 Technical Features
 
-![register](https://res.cloudinary.com/dvdktrhsz/image/upload/v1749547776/Screenshot_from_2025-06-10_14-10-45_jwewpf.png)
+- **⚡ Next.js 15** - Latest React framework with App Router
+- **🔷 TypeScript** - Full type safety throughout the application
+- **🍃 MongoDB** - Mongoose ODM for database operations
+- **🔑 JWT Authentication** - Secure token-based authentication with Jose
+- **🔒 Password Hashing** - bcryptjs for secure password storage
+- **📧 Email Service** - Resend integration for transactional emails
+- **🎨 Tailwind CSS** - Utility-first CSS framework with custom gradient theme
+- **🚀 React 19** - Latest React features and optimizations
 
-## Dashboard Page
+## Image Gallery
 
-![dashboard](https://res.cloudinary.com/dvdktrhsz/image/upload/v1749547776/Screenshot_from_2025-06-10_14-10-02_kqjwyy.png)
+### 🏠 Home
 
-## Reset Password Page
+![Home](https://res.cloudinary.com/dvdktrhsz/image/upload/v1750523476/Screenshot_from_2025-06-21_21-29-50_xzdf2d.png)
 
-![reset](https://res.cloudinary.com/dvdktrhsz/image/upload/v1749547776/Screenshot_from_2025-06-10_14-11-28_isw7sr.png)
+### 📊 Dashboard
 
-![reset](https://res.cloudinary.com/dvdktrhsz/image/upload/v1749547776/Screenshot_from_2025-06-10_14-11-45_yzvx8w.png)
+![Dashboard](https://res.cloudinary.com/dvdktrhsz/image/upload/v1750523476/Screenshot_from_2025-06-21_21-30-19_mqxw6u.png)
 
-## Email Verification Page
+### 🔑 Authentication
 
-![verify](https://res.cloudinary.com/dvdktrhsz/image/upload/v1749547778/Screenshot_from_2025-06-10_14-11-57_rwcy5w.png)
+![Register](https://res.cloudinary.com/dvdktrhsz/image/upload/v1750523475/Screenshot_from_2025-06-21_21-23-29_wa6fyg.png)
 
-## Getting Started
+![Login](https://res.cloudinary.com/dvdktrhsz/image/upload/v1750523475/Screenshot_from_2025-06-21_21-23-21_mqnflx.png)
+
+![Forgot Password](https://res.cloudinary.com/dvdktrhsz/image/upload/v1750523476/Screenshot_from_2025-06-21_21-27-57_ygx0f2.png)
+
+![Reset Password](https://res.cloudinary.com/dvdktrhsz/image/upload/v1750523475/Screenshot_from_2025-06-21_21-28-32_k2rzjj.png)
+
+![Change Password](https://res.cloudinary.com/dvdktrhsz/image/upload/v1750523477/Screenshot_from_2025-06-21_21-30-26_bob4j0.png)
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js >= 16.x
-- MongoDB instance (local or cloud)
-- [Next.js](https://nextjs.org/) >= 13.x
+- Node.js 18+
+- MongoDB database
+- Resend account (for email functionality)
 
 ### Installation
 
-```bash
-git clone https://github.com/talhabilal-dev/next-auth-kit.git
-cd next-auth-kit
-npm install
+1. **Clone the repository**
+
+   ```bash
+   git clonehttps://github.com/talhabilal-dev/next-auth-kit.git
+   cd next-auth-kit
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Environment Setup**
+   Create a `.env.local` file in the root directory:
+
+   ```bash
+   # Database
+   MONGODB_URI=your_mongodb_connection_string
+   
+   # JWT Secret
+   JWT_SECRET=your_super_secret_jwt_key
+   
+   # Email Service (Resend)
+   RESEND_API_KEY=your_resend_api_key
+   FROM_EMAIL_DOMAIN=noreply@yourdomain.com
+
+   # Environment
+   NODE_ENV=development
+   
+   # App URL
+   DOMAIN=http://localhost:3000
+   ```
+
+4. **Run the development server**
+
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 📦 Dependencies
+
+```json
+{
+  "bcryptjs": "^3.0.2",       // 🔒 Password hashing
+  "jose": "^6.0.11",          // 🔑 JWT handling
+  "lucide-react": "^0.513.0", // 🎨 Modern icons
+  "mongoose": "^8.15.1",      // 🍃 MongoDB ODM
+  "next": "15.3.3",           // ⚡ Next.js framework
+  "next-themes": "^0.4.6",    // 🌙 Theme management
+  "react": "^19.0.0",         // ⚛️ React library
+  "react-dom": "^19.0.0",     // 🌐 React DOM
+  "resend": "^4.5.2",         // 📧 Email service
+  "sonner": "^2.0.5",         // 🔔 Toast notifications
+  "tailwind-merge": "^3.3.0"  // 🎨 Tailwind utilities
+}
 ```
 
-### Environment Variables
+## 🗂 Project Structure
 
-Create a `.env` file in the root directory and configure the following:
-
-```env
-MONGODB_URI=your_mongodb_connection_string
-RESEND_API_KEY=your_resend_api_key
-TOKEN_SECRET=your_jwt_secret
-DOMAIN=http://localhost:3000
-FROM_EMAIL_DOMAIN=your@email.com
-NODE_ENV=development
+```
+next-auth-kit/
+├── node_modules/
+├── public/
+│   └── images/
+├── src/
+│   └── app/
+│       ├── api/
+│       │   └── users/
+│       │       ├── change-password/
+│       │       ├── forgot-password/
+│       │       │   └── sent/
+│       │       ├── verify/
+│       │       ├── login/
+│       │       ├── logout/
+│       │       ├── profile/
+│       │       ├── register/
+│       │       └── user-verify/
+│       │           └── sent/
+│       ├── user/
+│       │   ├── dashboard/
+│       │   ├── login/
+│       │   ├── register/
+│       │   ├── reset-password/
+│       │   ├── verify/
+│       │   └── verify-token/
+│       ├── components/
+│       ├── globals.css
+│       ├── layout.tsx
+│       └── page.tsx
+├── components/
+├── lib/
+├── helpers/
+├── types/
+├── models/
+├── middleware.ts
+└── config files (package.json, etc.)
 ```
 
-### Running the App
+## 🔗 Available Routes
 
-```bash
-npm run dev
-```
+### User Authentication Pages
 
-## Customization
+- `/user/login` - User signin
+- `/user/register` - User registration  
+- `/user/verify` - Email verification
+- `/user/verify-token` - Token verification
+- `/user/reset-password` - Password reset request
+- `/user/dashboard` - Protected dashboard
 
-- Update the UI components to match your branding.
-- Extend the user model in `/models/userModel.ts` as needed.
-- Modify middleware logic for custom access control.
+### API Endpoints
 
-## License
+- `POST /api/users/login` - User authentication
+- `POST /api/users/register` - User registration
+- `POST /api/users/verify` - Email verification
+- `POST /api/users/forgot-password` - Password reset
+- `GET /api/users/forgot-password/sent` - Password reset confirmation
+- `POST /api/users/change-password` - Password update
+- `POST /api/users/logout` - Session termination
+- `GET /api/users/profile` - User profile data
+- `POST /api/users/user-verify` - User verification
+- `GET /api/users/user-verify/sent` - Verification confirmation
 
-MIT
+## 🎯 Key Features Breakdown
+
+### Authentication Flow
+
+1. **Registration**: User signs up with email/password
+2. **Verification**: Email sent with verification link
+3. **Login**: Verified users can sign in
+4. **Dashboard Access**: JWT token provides access to protected routes
+5. **Password Management**: Users can change or reset passwords
+
+### Security Features
+
+- Password hashing with bcryptjs
+- JWT token validation
+- Protected route middleware
+- Email verification requirement
+- Secure password reset flow
+
+### UI/UX Features
+
+- Fully responsive design
+- Dark purple gradient theme
+- Loading states and error handling
+- Toast notifications for user feedback
+- Clean, modern interface with smooth animations
+
+## 🛡 Security Considerations
+
+- All passwords are hashed before storage
+- JWT tokens have expiration times
+- Email verification prevents fake accounts
+- CSRF protection via Next.js built-in features
+- Input validation and sanitization
+
+## 📱 Responsive Design
+
+The application is built mobile-first and includes:
+
+- Responsive sidebar that collapses on mobile
+- Touch-friendly interface elements
+- Optimized layouts for all screen sizes
+- Accessible navigation patterns
+
+## 🎨 Customization
+
+### Theming
+
+The project features a stunning dark purple gradient theme:
+
+- Custom purple gradient backgrounds
+- Dark UI components with purple accents
+- Consistent color scheme throughout the application
+- Modern glassmorphism effects
+
+### Email Templates
+
+Email templates can be customized in the API routes:
+
+- Verification emails
+- Password reset emails
+- Welcome emails
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy automatically
+
+### Other Platforms
+
+The application can be deployed to any platform that supports Next.js:
+
+- Netlify
+- Railway
+- DigitalOcean App Platform
+- AWS Amplify
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+If you encounter any issues or have questions:
+
+- Check the [Issues](https://github.com/yourusername/next-auth-kit/issues) page
+- Create a new issue with detailed information
+- Review the documentation and code comments
+
+## 🙏 Acknowledgments
+
+- Next.js team for the amazing framework
+- Vercel for hosting and deployment tools
+- Tailwind CSS for the utility-first CSS framework
+- All the open-source contributors whose packages make this possible
 
 ---
 
-**Contributions welcome!** Please open issues or pull requests for improvements.
+**Built with ❤️ using Next.js 15 ⚡, TypeScript 🔷, MongoDB 🍃, and React 19 ⚛️**
+
+---
