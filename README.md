@@ -31,7 +31,6 @@ A comprehensive authentication kit for Next.js projects, built with TypeScript a
 
 ![reset](https://res.cloudinary.com/dvdktrhsz/image/upload/v1749547776/Screenshot_from_2025-06-10_14-11-28_isw7sr.png)
 
-
 ![reset](https://res.cloudinary.com/dvdktrhsz/image/upload/v1749547776/Screenshot_from_2025-06-10_14-11-45_yzvx8w.png)
 
 ## Email Verification Page

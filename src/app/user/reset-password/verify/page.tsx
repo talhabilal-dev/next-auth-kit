@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   Lock,
@@ -23,11 +23,11 @@ const Page: React.FC = () => {
     error: null as string | null,
   });
 
-  const handleChange = (field: "password" | "confirmPassword") => (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setState((prev) => ({ ...prev, [field]: e.target.value, error: null }));
-  };
+  const handleChange =
+    (field: "password" | "confirmPassword") =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setState((prev) => ({ ...prev, [field]: e.target.value, error: null }));
+    };
 
   const validate = () => {
     if (!state.password || !state.confirmPassword) {
@@ -83,20 +83,22 @@ const Page: React.FC = () => {
   };
 
   const handleBackToLogin = () => {
-   
     router.push("/user/login");
-
-
   };
 
-  const gradientBg = "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900";
+  const gradientBg =
+    "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900";
 
   if (!token) {
     return (
-      <div className={`min-h-screen ${gradientBg} flex items-center justify-center p-4`}>
+      <div
+        className={`min-h-screen ${gradientBg} flex items-center justify-center p-4`}
+      >
         <div className="bg-white/5 border border-white/10 backdrop-blur-md text-white p-8 rounded-xl max-w-md w-full shadow-xl text-center">
           <AlertCircle className="w-10 h-10 text-red-400 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold mb-2">Invalid or Missing Token</h2>
+          <h2 className="text-xl font-semibold mb-2">
+            Invalid or Missing Token
+          </h2>
           <p className="text-sm text-gray-300 mb-6">
             The password reset link may be invalid or expired.
           </p>
@@ -113,14 +115,17 @@ const Page: React.FC = () => {
 
   if (state.isSuccess) {
     return (
-      <div className={`min-h-screen ${gradientBg} flex items-center justify-center p-4`}>
+      <div
+        className={`min-h-screen ${gradientBg} flex items-center justify-center p-4`}
+      >
         <div className="bg-white/5 border border-white/10 backdrop-blur-md text-white p-8 rounded-xl max-w-md w-full shadow-xl text-center">
           <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-8 h-8 text-green-400" />
           </div>
           <h2 className="text-2xl font-semibold mb-2">Password Updated!</h2>
           <p className="text-sm text-gray-300 mb-6">
-            Your password has been successfully reset. You can now log in with your new password.
+            Your password has been successfully reset. You can now log in with
+            your new password.
           </p>
           <button
             onClick={handleBackToLogin}
@@ -134,7 +139,9 @@ const Page: React.FC = () => {
   }
 
   return (
-    <div className={`min-h-screen ${gradientBg} flex items-center justify-center p-4 relative`}>
+    <div
+      className={`min-h-screen ${gradientBg} flex items-center justify-center p-4 relative`}
+    >
       <div className="absolute inset-0 opacity-40 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10" />
         <div
@@ -159,7 +166,9 @@ const Page: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm text-gray-300 mb-2">New Password</label>
+            <label className="block text-sm text-gray-300 mb-2">
+              New Password
+            </label>
             <input
               type="password"
               value={state.password}
