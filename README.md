@@ -253,6 +253,22 @@ Email templates can be customized in the API routes:
 - Password reset emails
 - Welcome emails
 
+## 🔄 Automated Dependency Updates
+
+This project includes automated monthly dependency updates to keep packages current and secure.
+
+### Features
+- **📅 Monthly Schedule**: Updates run on the first Monday of each month
+- **🔒 Security Updates**: Immediate security fixes override monthly schedule  
+- **📦 Grouped Updates**: Minor and patch updates grouped together
+- **🔍 Audit Checks**: Automated security audits with each update
+- **📋 PR Management**: Clear, detailed pull requests for review
+
+### Configuration
+- **Dependabot**: Handles dependency monitoring and PR creation
+- **GitHub Actions**: Provides additional automation and verification
+- **Documentation**: See [Dependency Updates Guide](.github/DEPENDENCY_UPDATES.md)
+
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
