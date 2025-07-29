@@ -57,8 +57,14 @@ export async function POST(req: NextRequest) {
     const token = await new SignJWT({ ...tokenData })
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()
-      .setExpirationTime(rememberMe ? "7d" : "1d")
+      .setExpirationTime("1h") // Shorter-lived access token
       .sign(new TextEncoder().encode(process.env.TOKEN_SECRET));
+
+    const refreshToken = await new SignJWT({ userId: user._id.toString() })
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuedAt()
+      .setExpirationTime(rememberMe ? "30d" : "7d")
+      .sign(new TextEncoder().encode(process.env.REFRESH_TOKEN_SECRET));
 
     const response = NextResponse.json({
       message: "User logged in successfully.",
@@ -70,7 +76,13 @@ export async function POST(req: NextRequest) {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      maxAge: rememberMe ? 7 * 24 * 60 * 60 : 24 * 60 * 60,
+      maxAge: 60 * 60, // 1 hour
+    });
+    response.cookies.set("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: rememberMe ? 30 * 24 * 60 * 60 : 7 * 24 * 60 * 60,
     });
 
     return response;

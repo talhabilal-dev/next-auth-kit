@@ -1,26 +1,30 @@
 import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
-  try {
+  const isProd = process.env.NODE_ENV === "production";
 
-    const response = NextResponse.json({
-      message: "User logged out successfully.",
-      success: true,
-    });
+  const response = NextResponse.json({
+    message: "User logged out successfully.",
+    success: true,
+  });
 
-    response.cookies.set("token", "", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
-      maxAge: 0,
-    });
+  // Kill access token
+  response.cookies.set("token", "", {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: isProd ? "none" : "lax", // prevent Chrome cookie rejection
+    expires: new Date(0),
+    path: "/",
+  });
 
-    return response;
-  } catch (error) {
-    console.error("Logout error:", error);
-    return NextResponse.json(
-      { error: "An error occurred while logging out." },
-      { status: 500 }
-    );
-  }
+  // Kill refresh token
+  response.cookies.set("refreshToken", "", {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: isProd ? "none" : "lax",
+    expires: new Date(0),
+    path: "/",
+  });
+
+  return response;
 }

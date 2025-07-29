@@ -103,7 +103,7 @@ export default function Login() {
 
           setFormData({
             email: "",
-            password: ""
+            password: "",
           });
           setRememberMe(false);
         } else {

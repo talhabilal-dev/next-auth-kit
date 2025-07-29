@@ -4,6 +4,10 @@ export interface TokenData {
   email: string;
   isVerified: boolean;
 }
+
+export interface RefreshTokenData {
+  userId: string;
+}
 export interface RegisterFormData {
   firstname?: string;
   lastname?: string;
