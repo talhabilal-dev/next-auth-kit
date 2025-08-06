@@ -75,7 +75,8 @@ A complete authentication solution built with Next.js 15, TypeScript, and MongoD
 2. **Install dependencies**
 
    ```bash
-   npm install
+   npm install || pnpm install
+
    ```
 
 3. **Environment Setup**
@@ -86,7 +87,8 @@ A complete authentication solution built with Next.js 15, TypeScript, and MongoD
    MONGODB_URI=your_mongodb_connection_string
    
    # JWT Secret
-   JWT_SECRET=your_super_secret_jwt_key
+   TOKEN_SECRET=your_token_secret
+   REFRESH_TOKEN_SECRET=your_refresh_token_secret
    
    # Email Service (Resend)
    RESEND_API_KEY=your_resend_api_key
