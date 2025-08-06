@@ -32,6 +32,8 @@ export default function VerifyTokenPage() {
           body: JSON.stringify({ token }),
         });
 
+        console.log("Verification response:", response);
+
         if (response.ok) {
           setVerification({
             status: "success",

@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
     if (!refreshToken) {
       return NextResponse.json(
-        { error: "Refresh token not found." },
+        { error: "Refresh token not found.", success: false },
         { status: 401 }
       );
     }
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
     if (!decoded || !decoded.userId) {
       return NextResponse.json(
-        { error: "Invalid refresh token." },
+        { error: "Invalid refresh token.", success: false },
         { status: 401 }
       );
     }
@@ -35,13 +35,16 @@ export async function POST(req: NextRequest) {
     // Get user from database
     const user = await User.findById(decoded.userId);
     if (!user) {
-      return NextResponse.json({ error: "User not found." }, { status: 404 });
+      return NextResponse.json(
+        { error: "User not found.", success: false },
+        { status: 404 }
+      );
     }
 
     // Check if user is still verified
     if (!user.isVerified) {
       return NextResponse.json(
-        { error: "User is not verified." },
+        { error: "User is not verified.", success: false },
         { status: 403 }
       );
     }
@@ -77,7 +80,7 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.error("Error in user token generation:", error);
     return NextResponse.json(
-      { error: "Failed to generate user token." },
+      { error: "Failed to generate user token.", success: false },
       { status: 500 }
     );
   }

@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
     if (!email || !password) {
       return NextResponse.json(
-        { error: "Email and password are required." },
+        { error: "Email and password are required.", success: false },
         { status: 400 }
       );
     }
@@ -21,19 +21,28 @@ export async function POST(req: NextRequest) {
     // Find user by email
     const user = await User.findOne({ email }).select("+password +isVerified");
     if (!user) {
-      return NextResponse.json({ error: "User not found." }, { status: 404 });
+      return NextResponse.json(
+        { error: "User not found.", success: false },
+        { status: 404 }
+      );
     }
 
     // Check if the password matches
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return NextResponse.json({ error: "Invalid password." }, { status: 401 });
+      return NextResponse.json(
+        { error: "Invalid password.", success: false },
+        { status: 401 }
+      );
     }
 
     // Check if the user is verified
     if (!user.isVerified) {
       return NextResponse.json(
-        { error: "User is not verified. Please verify your email." },
+        {
+          error: "User is not verified. Please verify your email.",
+          success: false,
+        },
         { status: 403 }
       );
     }
@@ -89,7 +98,7 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.error("Error in user login:", error);
     return NextResponse.json(
-      { error: "Failed to login user." },
+      { error: "Failed to login user.", success: false },
       { status: 500 }
     );
   }

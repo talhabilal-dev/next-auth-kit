@@ -26,6 +26,7 @@ const VerifyEmailPage = () => {
 
       const data = await res.json();
 
+
       if (!res.ok) throw new Error(data.message || "Something went wrong");
 
       toast.success("Verification link sent! Check your email.");

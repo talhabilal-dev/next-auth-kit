@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     const { email } = await req.json();
     if (!email) {
       return NextResponse.json(
-        { error: "Email is required." },
+        { error: "Email is required.", success: false },
         { status: 400 }
       );
     }
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
 
     if (!emailRegex.test(email)) {
       return NextResponse.json(
-        { error: "Invalid email format." },
+        { error: "Invalid email format.", success: false },
         { status: 400 }
       );
     }
@@ -31,7 +31,10 @@ export async function POST(req: NextRequest) {
     const existingUser = await User.findOne({ email });
 
     if (!existingUser) {
-      return NextResponse.json({ error: "Email not found." }, { status: 404 });
+      return NextResponse.json(
+        { error: "Email not found.", success: false },
+        { status: 404 }
+      );
     }
 
     // Send reset password email
@@ -44,13 +47,13 @@ export async function POST(req: NextRequest) {
 
     if (!response) {
       return NextResponse.json(
-        { error: "Failed to send reset password email." },
+        { error: "Failed to send reset password email.", success: false },
         { status: 500 }
       );
     }
 
     return NextResponse.json(
-      { message: "Reset password email sent successfully." },
+      { message: "Reset password email sent successfully.", success: true },
       { status: 200 }
     );
   } catch (error: any) {
@@ -59,7 +62,10 @@ export async function POST(req: NextRequest) {
       error.message
     );
     return NextResponse.json(
-      { error: "An error occurred while processing your request." },
+      {
+        error: "An error occurred while processing your request.",
+        success: false,
+      },
       { status: 500 }
     );
   }

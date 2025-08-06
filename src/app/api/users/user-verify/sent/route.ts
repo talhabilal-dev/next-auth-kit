@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     const { email } = await req.json();
     if (!email) {
       return NextResponse.json(
-        { error: "Email is required." },
+        { error: "Email is required.", success: false },
         { status: 400 }
       );
     }
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
 
     if (!emailRegex.test(email)) {
       return NextResponse.json(
-        { error: "Invalid email format." },
+        { error: "Invalid email format.", success: false },
         { status: 400 }
       );
     }
@@ -31,7 +31,10 @@ export async function POST(req: NextRequest) {
     const existingUser = await User.findOne({ email });
 
     if (!existingUser) {
-      return NextResponse.json({ error: "Email not found." }, { status: 404 });
+      return NextResponse.json(
+        { error: "Email not found.", success: false },
+        { status: 404 }
+      );
     }
 
     // Send verification email
@@ -44,18 +47,21 @@ export async function POST(req: NextRequest) {
     );
     if (!response) {
       return NextResponse.json(
-        { error: "Failed to send verification email." },
+        { error: "Failed to send verification email.", success: false },
         { status: 500 }
       );
     }
     return NextResponse.json(
-      { message: "Verification email sent successfully." },
+      { message: "Verification email sent successfully.", success: true },
       { status: 200 }
     );
   } catch (error: any) {
     console.error("Error in POST /api/users/user-verify/sent:", error.message);
     return NextResponse.json(
-      { error: "An error occurred while sending the verification email." },
+      {
+        error: "An error occurred while sending the verification email.",
+        success: false,
+      },
       { status: 500 }
     );
   }

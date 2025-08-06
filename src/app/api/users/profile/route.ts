@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
 
   if (!payload) {
     return NextResponse.json(
-      { error: "Unauthorized. Please log in." },
+      { error: "Unauthorized. Please log in.", success: false },
       { status: 401 }
     );
   }
@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
 
   if (!userId) {
     return NextResponse.json(
-      { error: "Unauthorized. Please log in." },
+      { error: "Unauthorized. Please log in.", success: false },
       { status: 401 }
     );
   }
@@ -26,13 +26,19 @@ export async function GET(req: NextRequest) {
     await connectDB();
     const user = await User.findById(userId);
     if (!user) {
-      return NextResponse.json({ error: "User not found." }, { status: 404 });
+      return NextResponse.json(
+        { error: "User not found.", success: false },
+        { status: 404 }
+      );
     }
-    return NextResponse.json({ user }, { status: 200 });
+    return NextResponse.json({ user, success: true }, { status: 200 });
   } catch (error: any) {
     console.error("Error fetching user profile:", error.message);
     return NextResponse.json(
-      { error: "An error occurred while fetching the user profile." },
+      {
+        error: "An error occurred while fetching the user profile.",
+        success: false,
+      },
       { status: 500 }
     );
   }

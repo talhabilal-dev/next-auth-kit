@@ -2,10 +2,13 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
-
 import { RegisterFormData, RegisterFormErrors } from "@/types";
+import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Register() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState<RegisterFormData>({
     firstname: "",
     lastname: "",
@@ -17,6 +20,9 @@ export default function Register() {
 
   const [errors, setErrors] = useState<RegisterFormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
 
   const validateForm = (): RegisterFormErrors => {
     const newErrors: RegisterFormErrors = {};
@@ -128,18 +134,23 @@ export default function Register() {
           return;
         }
 
-        // Success
-        toast.success("Account created successfully!");
-        console.log("Form submitted:", formData);
+        if (data.success) {
+          // Success
+          toast.success("Account created successfully!");
+          // Redirect to login page
+          router.push("/user/login");
 
-        setFormData({
-          firstname: "",
-          lastname: "",
-          username: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
-        });
+          setFormData({
+            firstname: "",
+            lastname: "",
+            username: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+          });
+
+          setErrors({});
+        }
       } catch (error: unknown) {
         console.error("Signup error:", error);
 
@@ -161,6 +172,13 @@ export default function Register() {
       e.preventDefault();
       handleSubmit();
     }
+  };
+
+  const togglePasswordVisibility = (): void => {
+    setShowConfirmPassword((prev) => !prev);
+    // Toggle showPassword only if confirmPassword is being toggled
+
+    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -332,21 +350,34 @@ export default function Register() {
               >
                 Password
               </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={formData.password}
-                onChange={handleChange}
-                onKeyPress={handleKeyPress}
-                className={`w-full px-4 py-2 bg-slate-700/50 border rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 text-white ${
-                  errors.email ? "border-red-500" : "border-slate-600"
-                }`}
-                placeholder="Enter your password"
-                aria-describedby={
-                  errors.password ? "password-error" : undefined
-                }
-              />
+              <div className="relative">
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  value={formData.password}
+                  onChange={handleChange}
+                  onKeyPress={handleKeyPress}
+                  className={`w-full px-4 py-2 pr-12 bg-slate-700/50 border rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 text-white ${
+                    errors.password ? "border-red-500" : "border-slate-600"
+                  }`}
+                  placeholder="Enter your password"
+                  aria-describedby={
+                    errors.password ? "password-error" : undefined
+                  }
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-300"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
               {errors.password && (
                 <p
                   id="password-error"
@@ -366,21 +397,38 @@ export default function Register() {
               >
                 Confirm Password
               </label>
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                onKeyPress={handleKeyPress}
-                className={`w-full px-4 py-2 bg-slate-700/50 border rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 text-white ${
-                  errors.email ? "border-red-500" : "border-slate-600"
-                }`}
-                placeholder="Confirm your password"
-                aria-describedby={
-                  errors.confirmPassword ? "confirm-password-error" : undefined
-                }
-              />
+              <div className="relative">
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  onKeyPress={handleKeyPress}
+                  className={`w-full px-4 py-2 pr-12 bg-slate-700/50 border rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 text-white ${
+                    errors.confirmPassword
+                      ? "border-red-500"
+                      : "border-slate-600"
+                  }`}
+                  placeholder="Confirm your password"
+                  aria-describedby={
+                    errors.confirmPassword
+                      ? "confirm-password-error"
+                      : undefined
+                  }
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-300"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
               {errors.confirmPassword && (
                 <p
                   id="confirm-password-error"

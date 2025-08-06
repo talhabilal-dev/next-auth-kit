@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 
     if (!token) {
       return NextResponse.json(
-        { error: "Token is required." },
+        { error: "Token is required.", success: false },
         { status: 400 }
       );
     }
@@ -23,14 +23,14 @@ export async function POST(req: NextRequest) {
 
     if (!user) {
       return NextResponse.json(
-        { error: "Invalid or expired token." },
+        { error: "Invalid or expired token.", success: false },
         { status: 400 }
       );
     }
 
     if (user.isVerified) {
       return NextResponse.json(
-        { error: "User is already verified." },
+        { error: "User is already verified.", success: false },
         { status: 400 }
       );
     }
@@ -40,11 +40,14 @@ export async function POST(req: NextRequest) {
     user.verificationTokenExpiry = undefined; // Clear the expiry
     await user.save();
 
-    return NextResponse.json({ message: "User verified successfully." });
+    return NextResponse.json({
+      message: "User verified successfully.",
+      success: true,
+    });
   } catch (error: any) {
     console.error("Error in user verification:", error);
     return NextResponse.json(
-      { error: "Failed to verify user." },
+      { error: "Failed to verify user.", success: false },
       { status: 500 }
     );
   }

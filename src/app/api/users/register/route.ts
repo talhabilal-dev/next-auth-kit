@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
     if (!firstname || !lastname || !username || !email || !password) {
       return NextResponse.json(
-        { error: "All fields are required." },
+        { error: "All fields are required.", success: false },
         { status: 400 }
       );
     }
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
-        { error: "User already exists." },
+        { error: "User already exists.", success: false },
         { status: 409 }
       );
     }
@@ -50,18 +50,18 @@ export async function POST(req: NextRequest) {
 
     if (!emailResponse) {
       return NextResponse.json(
-        { error: "Failed to send verification email." },
+        { error: "Failed to send verification email.", success: false },
         { status: 500 }
       );
     }
 
     return NextResponse.json(
-      { message: "User registered successfully." },
+      { message: "User registered successfully.", success: true },
       { status: 201 }
     );
   } catch (error: any) {
     return NextResponse.json(
-      { error: error.message || "Internal Server Error" },
+      { error: error.message || "Internal Server Error", success: false },
       { status: 500 }
     );
   }

@@ -15,10 +15,39 @@ const PUBLIC_PATHS = [
   "/",
 ];
 
+const AUTH_PATHS = [
+  "/user/login",
+  "/user/register",
+  "/user/verify-token",
+  "/user/reset-password/verify",
+  "/user/reset-password",
+  "/user/verify",
+];
+
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
   const token = req.cookies.get("token")?.value;
   const refreshToken = req.cookies.get("refreshToken")?.value;
+
+  // If user is authenticated and tries to access auth routes, redirect to dashboard
+  if (AUTH_PATHS.includes(path) && (token || refreshToken)) {
+    // Check if tokens are valid before redirecting
+    if (token) {
+      const tokenExpired = await isTokenExpired(token);
+      if (!tokenExpired) {
+        // Valid token, redirect to dashboard
+        return NextResponse.redirect(new URL("/user/dashboard", req.url));
+      }
+    }
+
+    if (refreshToken) {
+      const refreshValid = await isRefreshTokenValid(refreshToken);
+      if (refreshValid) {
+        // Valid refresh token, redirect to dashboard
+        return NextResponse.redirect(new URL("/user/dashboard", req.url));
+      }
+    }
+  }
 
   // Allow public paths
   if (PUBLIC_PATHS.includes(path)) {
@@ -87,11 +116,6 @@ export default async function middleware(req: NextRequest) {
       response.cookies.delete("token");
       return response;
     }
-  }
-
-  // If user is already authenticated and tries to access login/register, redirect to dashboard
-  if (path === "/user/login" || path === "/user/register") {
-    return NextResponse.redirect(new URL("/user/dashboard", req.url));
   }
 
   return NextResponse.next();
