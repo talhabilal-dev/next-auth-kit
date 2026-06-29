@@ -1,5 +1,5 @@
 import React from "react";
-import { Shield, Zap, Code, ArrowRight, Github, Twitter } from "lucide-react";
+import { Shield, Zap, Code, ArrowRight, GitBranch, X } from "lucide-react";
 import Link from "next/link";
 
 export default function WelcomePage() {
@@ -76,7 +76,7 @@ export default function WelcomePage() {
                 target="_blank"
                 className="px-8 py-4 border-2 border-purple-400/50 text-purple-200 hover:bg-purple-400/10 font-semibold rounded-xl transition-all duration-300 hover:border-purple-400 flex items-center space-x-2"
               >
-                <Github className="h-5 w-5" />
+                <GitBranch className="h-5 w-5" />
                 <span>View on GitHub</span>
               </Link>
             </div>
@@ -162,13 +162,13 @@ export default function WelcomePage() {
                 href="https://github.com/talhabilal-dev/next-auth-kit"
                 className="text-gray-400 hover:text-purple-400 transition-colors"
               >
-                <Github className="h-5 w-5" />
+                <GitBranch className="h-5 w-5" />
               </Link>
               <Link
                 href="https://x.com/talhabilaldev"
                 className="text-gray-400 hover:text-purple-400 transition-colors"
               >
-                <Twitter className="h-5 w-5" />
+                <X className="h-5 w-5" />
               </Link>
               <span className="text-gray-500 text-sm">
                 © 2025 NextAuth Kit. All rights reserved.
